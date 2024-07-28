@@ -1,14 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const FETCH_DATA_URL = "https://api.spacexdata.com/v4/launches";
+
 export const useData = () => {
   const [data, setData] = useState();
 
   const fetchData = () => {
     axios
-      .get("https://api.spacexdata.com/v4/launches")
-      .then((response) => setData(response.data))
-      .catch((e) => console.log("fetch data failed: ", e));
+      .get(FETCH_DATA_URL)
+      .then((res) => setData(res.data))
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
