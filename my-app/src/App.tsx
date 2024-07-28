@@ -2,13 +2,25 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import { useData } from "./hooks/useData";
+import { fetchData } from "./utils/fetchData";
+import { useQuery } from "react-query";
 
 function App() {
   const [count, setCount] = useState(0);
-  const data = useData();
+  const { data, error, isLoading } = useQuery<any, Error>(
+    "fetchData",
+    fetchData
+  );
 
-  console.log('<<<<<', data)
+  console.log("<<<<<", data);
+  if (isLoading) {
+    return <p>is loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
   return (
     <>
       <div>
